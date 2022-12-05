@@ -83,6 +83,15 @@ const columns = [
   },
 ];
 
+function rowHeightEval(rankingQueryResults) {
+  try { 
+    const height = rankingQueryResults[0].athlete2MemberID ? 50 : 35
+    return height;
+  } catch {
+    return 50;
+  }
+}
+
 function RankingsTable({ rankingQueryResults }) {
   const handlePopoverOpen = (event) => {};
 
@@ -94,21 +103,25 @@ function RankingsTable({ rankingQueryResults }) {
         marginTop: 1,
       }}
     >
-      <DataGrid
-        rows={rankingQueryResults}
-        columns={columns}
-        pageSize={25}
-        rowsPerPageOptions={[25]}
-        rowHeight={rankingQueryResults[0].athlete2MemberID ? 50 : 35}
-        disableColumnMenu
-        disableSelectionOnClick
-        experimentalFeatures={{ newEditingApi: true }}
-        componentsProps={{
-          cell: {
-            onMouseEnter: handlePopoverOpen,
-          },
-        }}
-      />
+      {
+        rankingQueryResults || !rankingQueryResults.length
+          ?  "carregando..."
+          : <DataGrid
+              rows={rankingQueryResults}
+              columns={columns}
+              pageSize={25}
+              rowsPerPageOptions={[25]}
+              rowHeight={rowHeightEval(rankingQueryResults)}
+              disableColumnMenu
+              disableSelectionOnClick
+              experimentalFeatures={{ newEditingApi: true }}
+              componentsProps={{
+                cell: {
+                  onMouseEnter: handlePopoverOpen,
+                },
+              }}
+            />
+      }
       <Popover
         sx={{
           pointerEvents: "none",

@@ -54,7 +54,7 @@ function RankingFilters({
   setAthleteAgeFilter,
   setAthleteClubFilter,
 }) {
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
   
   function updateShowFilters() {
     setShowFilters(!showFilters);
