@@ -11,7 +11,8 @@ function Rankings() {
   const [categoriesListResults, setCategoriesListResults] = useState([]);
   const [categorySelected, setCategorySelected] = useState({ label: "", id: null });
 
-  const [periodDateSelected, setPeriodDateSelected] = useState(dayjs(Date.now()).toISOString().substring(0, 10));
+  const initialPeriod = dayjs(Date.now()).toISOString().substring(0, 10);
+  const [periodDateSelected, setPeriodDateSelected] = useState(initialPeriod);
 
   const [athleteMemberIDFilter, setAthleteMemberIDFilter] = useState(null);
   const [athleteNameFilter, setAthleteNameFilter] = useState(null);
@@ -24,9 +25,22 @@ function Rankings() {
     async function getRankingsList() {
       const result = await RankingsController.getRankingsList();
       setRankingsListResults(result);
-      console.log({ result })
       // just so the grid isn't empty at first
       setRankingSelected(result[0]);
+
+
+      // const resulta = await RankingsController.getRankingQuery(
+      //   rankingSelected?.id,
+      //   categorySelected?.id,
+      //   periodDateSelected,
+      //   athleteMemberIDFilter,
+      //   athleteNameFilter,
+      //   athleteAgeFilter,
+      //   athleteClubFilter
+      // );
+
+      // setRankingQueryResults(resulta);
+
     }
     getRankingsList();
   }, [])
@@ -46,7 +60,7 @@ function Rankings() {
     getCategoriesList();
   }, [rankingSelected])
 
-  useEffect(function onCategoryChange() {
+  useEffect(function onFilterChange() {
     console.log({ athleteMemberIDFilter });
     console.log({ athleteNameFilter });
     console.log({ athleteAgeFilter });
@@ -56,8 +70,15 @@ function Rankings() {
       if(rankingSelected?.id === null || categorySelected?.id === null) {
         return
       }
-
-      const result = await RankingsController.getRankingQuery(rankingSelected?.id, categorySelected?.id, periodDateSelected, athleteMemberIDFilter, athleteNameFilter, athleteAgeFilter, athleteClubFilter);
+      const result = await RankingsController.getRankingQuery(
+        rankingSelected?.id,
+        categorySelected?.id,
+        periodDateSelected,
+        athleteMemberIDFilter,
+        athleteNameFilter,
+        athleteAgeFilter,
+        athleteClubFilter
+      );
       setRankingQueryResults(result);
     }
     getRankingQuery();
@@ -85,12 +106,3 @@ function Rankings() {
 }
 
 export default Rankings;
-
-// Rankings filter
-
-//*=required
-// ranking period=default -> today
-
-// Ranking*, Category*, Member Id, Athlete name, age, club, ranking period* (calendar)
-
-// Ranking={estadual sc, estadual pr, global, club do martendal}

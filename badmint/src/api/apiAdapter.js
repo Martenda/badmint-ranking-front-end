@@ -33,8 +33,6 @@ const rankingCategoriesList = [
   { id: 3, label: "Misto Duplas Senior", },
 ];
 
-// "api/ranking-query?ranking=123&category=abc"
-// "api/ranking-query?ranking=123&category=abc&athletename=ucas%athleteage=15"
 const rankingQuery = [
   {
     id: 1, classification: 1, scorePoints: 2780,

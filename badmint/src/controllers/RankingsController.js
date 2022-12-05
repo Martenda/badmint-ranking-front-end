@@ -1,6 +1,11 @@
+import dayjs from "dayjs";
 import ApiAdapter from "../api/apiAdapter";
 
 function normalizeLabelNames(list) {
+  // if there's no "name", then there's nothing to normalize
+  if(!list[0]?.name) {
+    return list
+  }
   return list.map(i => ({ ...i, label: i.name }))
 }
 
@@ -10,19 +15,26 @@ async function getRankingsList() {
 }
 
 async function getCategoriesList() {
-  // example for now
-  // const response = await ApiAdapter.get("category?ranking=" + rankingId);
   const { data } = await ApiAdapter.get("category");
   return normalizeLabelNames(data);
 }
 
-async function getRankingQuery(rankingId, categoryId, periodDate, athleteMemberID, athleteName, athleteAge, athleteClub) {
-  // example for now
-  // api/ranking-query&cat_id=57&ryear=2022&week=40&page_size=25&page_no=1
-  const route = `api/ranking-query?ranking=${rankingId}&category=${categoryId}&period_date=${periodDate}&athlete_member_id=${athleteMemberID}&athlete_name=${athleteName}&athlete_age=${athleteAge}&athlete_club=${athleteClub}` 
+async function getRankingQuery(rankingId, categoryId, periodDate, memberId, athleteName, athleteAge, athleteClub) {
+  const search = memberId || athleteName || athleteAge || athleteClub;
 
 
-  console.log({ getRankingQueryRoute: route })
+  let route = `ranking-query?ranking=${rankingId}&category=${categoryId}`
+
+  if(search !== null) {
+    route += `&search=${search}`
+  }
+  
+  // if the date in the picker is anything different than the initial state, then filter
+  const initialPeriod = dayjs(Date.now()).toISOString().substring(0, 10);
+  if(initialPeriod !== periodDate) {
+    route += `&period_date=${periodDate}`
+  }
+
   const { data } = await ApiAdapter.get(route)
   return normalizeLabelNames(data);
 }

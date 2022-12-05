@@ -12,6 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
+import { Typography } from "@mui/material";
 
 const rankingPeriodList = [
   { id: 1, label: "2022 semana 22", championshipDate: "2022-06-02" },
@@ -139,7 +140,6 @@ function RankingFilters({
             )}
           >
             <DesktopDatePicker
-              // disablePortal
               id="filterRankingPeriodDatePicker"
               label="Período do Ranking"
               inputFormat="DD/MM/YYYY"
@@ -152,7 +152,6 @@ function RankingFilters({
                   label="Período do Ranking"
                   />
               )}
-              //renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
         </Grid>
@@ -181,6 +180,7 @@ function RankingFilters({
           }}
         />
       </div>
+      {showFilters && <Typography variant={"subtitle2"} style={{color: "grey"}}>Os campos do filtro são priorizados da esquerda pra direita</Typography>}
       <Grid
         container
         spacing={0}
@@ -249,7 +249,6 @@ function RankingFilters({
         </Grid>
         <Grid xs={1}>
           <Link
-            to="#abc"
             style={{
               textDecoration: "none",
             }}
