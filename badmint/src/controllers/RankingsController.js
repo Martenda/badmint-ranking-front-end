@@ -44,8 +44,8 @@ async function getRankingQuery(rankingId, categoryId, periodDate, memberId, athl
     route += `&period_date=${periodDate}`
   }
 
-  // const { data } = await ApiAdapter.get(route)
-  // return normalizeLabelNames();
+  const { data } = await ApiAdapter.get(route)
+  return normalizeLabelNames(data);
 }
 
 export default {

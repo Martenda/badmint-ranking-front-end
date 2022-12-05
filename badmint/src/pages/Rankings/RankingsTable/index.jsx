@@ -95,6 +95,10 @@ function rowHeightEval(rankingQueryResults) {
 function RankingsTable({ rankingQueryResults }) {
   const handlePopoverOpen = (event) => {};
 
+  if(!rankingQueryResults || !rankingQueryResults.length) {
+    return <></>
+  }
+
   return (
     <Box
       sx={{
@@ -103,25 +107,21 @@ function RankingsTable({ rankingQueryResults }) {
         marginTop: 1,
       }}
     >
-      {
-        rankingQueryResults || !rankingQueryResults.length
-          ?  "carregando..."
-          : <DataGrid
-              rows={rankingQueryResults}
-              columns={columns}
-              pageSize={25}
-              rowsPerPageOptions={[25]}
-              rowHeight={rowHeightEval(rankingQueryResults)}
-              disableColumnMenu
-              disableSelectionOnClick
-              experimentalFeatures={{ newEditingApi: true }}
-              componentsProps={{
-                cell: {
-                  onMouseEnter: handlePopoverOpen,
-                },
-              }}
-            />
-      }
+    <DataGrid
+      rows={rankingQueryResults}
+      columns={columns}
+      pageSize={25}
+      rowsPerPageOptions={[25]}
+      rowHeight={rowHeightEval(rankingQueryResults)}
+      disableColumnMenu
+      disableSelectionOnClick
+      experimentalFeatures={{ newEditingApi: true }}
+      componentsProps={{
+        cell: {
+          onMouseEnter: handlePopoverOpen,
+        },
+      }}
+    />
       <Popover
         sx={{
           pointerEvents: "none",
