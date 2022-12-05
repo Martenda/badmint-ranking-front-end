@@ -10,18 +10,27 @@ function normalizeLabelNames(list) {
 }
 
 async function getRankingsList() {
-  const { data } = await ApiAdapter.get("ranking")
-  return normalizeLabelNames(data);
+  try {
+    const { data } = await ApiAdapter.get("ranking")
+    return normalizeLabelNames(data);
+  } catch(e) {
+    console.error(e)
+    return []
+  }
 }
 
 async function getCategoriesList() {
-  const { data } = await ApiAdapter.get("category");
-  return normalizeLabelNames(data);
+  try {
+    const { data } = await ApiAdapter.get("category");
+    return normalizeLabelNames(data);
+  } catch(e) {
+    console.error(e)
+    return []
+  }
 }
 
 async function getRankingQuery(rankingId, categoryId, periodDate, memberId, athleteName, athleteAge, athleteClub) {
   const search = memberId || athleteName || athleteAge || athleteClub;
-
 
   let route = `ranking-query?ranking=${rankingId}&category=${categoryId}`
 
@@ -35,8 +44,8 @@ async function getRankingQuery(rankingId, categoryId, periodDate, memberId, athl
     route += `&period_date=${periodDate}`
   }
 
-  const { data } = await ApiAdapter.get(route)
-  return normalizeLabelNames(data);
+  // const { data } = await ApiAdapter.get(route)
+  // return normalizeLabelNames();
 }
 
 export default {

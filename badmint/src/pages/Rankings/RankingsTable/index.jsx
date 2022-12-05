@@ -17,7 +17,7 @@ const columns = [
   {
     field: "athletesMembersIDs",
     headerName: "Member ID",
-    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1MemberID}<br/>{/*cellValues.row.athlete2MemberID*/}</label>)},
+    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1MemberID}<br/>{cellValues.row.athlete2MemberID}</label>)},
     width: 150,
     sortable: false,
     hideable: false,
@@ -27,7 +27,7 @@ const columns = [
   {
     field: "athletesNames",
     headerName: "Nome do Atleta/Dupla",
-    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1Name}<br/>{/*cellValues.row.athlete2Name*/}</label>)},
+    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1Name}<br/>{cellValues.row.athlete2Name}</label>)},
     width: 400,
     sortable: false,
     hideable: false,
@@ -37,7 +37,7 @@ const columns = [
   {
     field: "athletesAges",
     headerName: "Idade",
-    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1Age}<br/>{/*cellValues.row.athlete2Age*/}</label>)},
+    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1Age}<br/>{cellValues.row.athlete2Age}</label>)},
     type: "number",
     width: 80,
     sortable: false,
@@ -49,7 +49,7 @@ const columns = [
   {
     field: "athletesClubs",
     headerName: "Clube",
-    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1Club}<br/>{/*cellValues.row.athlete2Club*/}</label>)},
+    renderCell: (cellValues) => {return (<label>{cellValues.row.athlete1Club}<br/>{cellValues.row.athlete2Club}</label>)},
     width: 110,
     sortable: false,
     hideable: false,
@@ -99,7 +99,7 @@ function RankingsTable({ rankingQueryResults }) {
         columns={columns}
         pageSize={25}
         rowsPerPageOptions={[25]}
-        rowHeight={35}
+        rowHeight={rankingQueryResults[0].athlete2MemberID ? 50 : 35}
         disableColumnMenu
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
