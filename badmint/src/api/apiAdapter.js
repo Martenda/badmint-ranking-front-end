@@ -1,5 +1,7 @@
 // const USE_REMOTE_API = process.env.USE_REMOTE_API
-const USE_REMOTE_API = false
+// const REMOTE_URL = process.env.REMOTE_URL
+const USE_REMOTE_API = true
+const REMOTE_URL = "https://badmint-api-xf2jb.ondigitalocean.app/api/v1"
 
 // async function onBuscar() {
 //   try {
@@ -84,11 +86,20 @@ const rankingQuery = [
 //https://bwfworldtour.bwfbadminton.com/rankings/?id=9&cat_id=57&ryear=2022&week=40&page_size=25&page_no=1
 
 class RemoteApiAdapter {
-  get(url) {
-    throw new Error("Method not implemented.");
+  async get(url) {
+    const fullUrl = `${REMOTE_URL}/${url}`;
+    try {
+      const response = await fetch(fullUrl);
+      const data = await response.json();
+      return { data };
+    } catch(e) {
+      console.error(`RemoteApiAdapter.get(${fullUrl}): Error: ${e}`)
+    }
   }
-  post(url, params, data) {
-    throw new Error("Method not implemented.");
+
+  async post(url, params, data) {
+    const response = await fetch(url, { body: data }) 
+    return await response.json()
   }
   delete(url, params) {
     throw new Error("Method not implemented.");

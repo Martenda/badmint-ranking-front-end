@@ -24,7 +24,7 @@ function Rankings() {
     async function getRankingsList() {
       const result = await RankingsController.getRankingsList();
       setRankingsListResults(result);
-
+      console.log({ result })
       // just so the grid isn't empty at first
       setRankingSelected(result[0]);
     }
@@ -33,7 +33,7 @@ function Rankings() {
 
   useEffect(function onRankingChange() {
     async function getCategoriesList() {
-      if(rankingSelected?.id === null) {
+      if(!rankingSelected || rankingSelected?.id === null) {
         return
       }
 
@@ -47,10 +47,10 @@ function Rankings() {
   }, [rankingSelected])
 
   useEffect(function onCategoryChange() {
-    console.log(athleteMemberIDFilter);
-    console.log(athleteNameFilter);
-    console.log(athleteAgeFilter);
-    console.log(athleteClubFilter);
+    console.log({ athleteMemberIDFilter });
+    console.log({ athleteNameFilter });
+    console.log({ athleteAgeFilter });
+    console.log({ athleteClubFilter });
 
     async function getRankingQuery() {
       if(rankingSelected?.id === null || categorySelected?.id === null) {
