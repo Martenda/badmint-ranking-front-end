@@ -79,11 +79,11 @@ function Rankings() {
         athleteAgeFilter,
         athleteClubFilter
       );
+      console.log({result})
       setRankingQueryResults(result);
     }
     getRankingQuery();
   }, [categorySelected, periodDateSelected, athleteMemberIDFilter, athleteNameFilter, athleteAgeFilter, athleteClubFilter])
-
   return (
     <div style={{ padding: "4rem", minWidth: 1120 }}>
       <h2>Rankings</h2>

@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridCloseIcon } from "@mui/x-data-grid";
 import TrophyIcon from '@mui/icons-material/EmojiEvents';
 import { Button, Card, Modal } from "@mui/material";
+import RankingsController from "../../../controllers/RankingsController";
 
 const columns = [
   {
@@ -68,17 +69,17 @@ const columns = [
     align: "center",
     description: "Pontos válidos do atleta no período em questão",
   },
-  {
-    field: "team",
-    headerName: "Resultados",
-    description: "Resultados da equipe por campeonato",
-    width: 100,
-    sortable: false,
-    hideable: false,
-    headerAlign: "center",
-    align: "center",
-    renderCell: (cellValues) => {return <TrophyIcon value="${cellValues.row.athlete1MemberID}" /*onClick={handleTrophyClick(cellValues.row.athlete1MemberID, cellValues.row.athlete2MemberID)alert('oi')}*/ />},
-  },
+  // {
+  //   field: "team",
+  //   headerName: "Resultados",
+  //   description: "Resultados da equipe por campeonato",
+  //   width: 100,
+  //   sortable: false,
+  //   hideable: false,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   renderCell: (cellValues) => {return <TrophyIcon value="${cellValues.row.athlete1MemberID}" /*onClick={handleTrophyClick(cellValues.row.athlete1MemberID, cellValues.row.athlete2MemberID)alert('oi')}*/ />},
+  // },
 ];
 
 function rowHeightEval(rankingQueryResults) {
@@ -94,45 +95,9 @@ function RankingsTable({ rankingQueryResults }) {
   
   const [isResultModalOpen, setIsResultModalOpen] = React.useState(false);
   
-  function handleTrophyClick(athlete1MemberId, Athlete2MemberId) {
-    setIsResultModalOpen(true)
-
-    // alert(JSON.stringify({ athlete1MemberId, Athlete2MemberId }))
-  }
- 
-  const mock = [
-    {ChampionshipName: '2022 Etapa 1 Presidente Getúlio', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 2 Ibirama', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 3 Presidente Getúlio', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 4 Rio do Sul', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Florianópolis', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Florianópolis', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 2 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Presidente Getúlio', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 3 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Ibirama', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Presidente Getúlio', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 4 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Florianópolis', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Ibirama', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Florianópolis', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 2 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Rio do Sul', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 2 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Rio do Sul', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 12 Rio do Sul', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Presidente Getúlio', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Florianópolis', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-    {ChampionshipName: '2022 Etapa 1 Joaçaba', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
-  ];
 
   function renderModalRow(item) {
-    return `Campeonato ${item.ChampionshipName} em ${item.ChampionshipDate}: ${item.ClassificationPosition}° lugar - ${item.ScorePoints} pontos`
+    return `Campeonato id=${item.championship} em ${item.expiration_date}: ${item.classification}° lugar - ${item.score} pontos`
   }
 
   function renderRows(list) {
@@ -174,13 +139,26 @@ function RankingsTable({ rankingQueryResults }) {
   //   return <></>
   // }
 
-  const handleOnCellClick = (params) => {
+  const handleOnCellClick = (e) => {
     setIsResultModalOpen(true);
+    getClassificationScore(e.row.team)
   };
+
+  const [classificationScore, setClassificationScore] = React.useState([]);
+
+
+  const getClassificationScore = async (teamId) => {
+      const score = await RankingsController.getClassificationScore(teamId)
+      setClassificationScore(score)
+  }
+
+
+  if(!rankingQueryResults || !rankingQueryResults?.length) {
+    return <></>;
+  }
 
   return (
     <div>
-    {/* <TrophyIcon onClick={() => handleTrophyClick(1,2)} /> */}
     <Modal
       open={isResultModalOpen}
       sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
@@ -195,7 +173,9 @@ function RankingsTable({ rankingQueryResults }) {
             <GridCloseIcon />
         </Button>
         </div>
-        {renderRows(mock)}
+        <div style={{ display: 'flex', flexDirection: 'column', }}>
+        {renderRows(classificationScore)}
+        </div>
       </Box>
     </Modal>
     <Box
@@ -214,7 +194,7 @@ function RankingsTable({ rankingQueryResults }) {
       disableColumnMenu
       disableSelectionOnClick
       experimentalFeatures={{ newEditingApi: true }}
-      onCellClick={handleOnCellClick}
+      onCellClick={(e) => handleOnCellClick(e)}
     />
     </Box>
   </div>

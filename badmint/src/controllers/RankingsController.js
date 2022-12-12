@@ -48,8 +48,14 @@ async function getRankingQuery(rankingId, categoryId, periodDate, memberId, athl
   return normalizeLabelNames(data);
 }
 
+async function getClassificationScore(teamId) {
+  const { data } = await ApiAdapter.get(`classification-score?team=${teamId}`)
+  return data;
+}
+
 export default {
   getRankingsList,
   getCategoriesList,
   getRankingQuery,
+  getClassificationScore,
 }
