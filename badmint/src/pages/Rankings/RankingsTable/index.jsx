@@ -97,7 +97,7 @@ function RankingsTable({ rankingQueryResults }) {
   function handleTrophyClick(athlete1MemberId, Athlete2MemberId) {
     setIsResultModalOpen(true)
 
-    alert(JSON.stringify({ athlete1MemberId, Athlete2MemberId }))
+    // alert(JSON.stringify({ athlete1MemberId, Athlete2MemberId }))
   }
  
   const mock = [
@@ -147,27 +147,27 @@ function RankingsTable({ rankingQueryResults }) {
 
   // Campeonato ${ChampionshipName} em ${ChampionshipDate}: ${ClassificationPosition}° lugar - ${ScorePoints} pontos
   // return (
-  //   <div>
-  //     <TrophyIcon onClick={() => handleTrophyClick(1,2)} />
+    // <div>
+    //   <TrophyIcon onClick={() => handleTrophyClick(1,2)} />
 
-  //     <Modal
-  //       open={isResultModalOpen}
-  //       sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
-  //       onClose={()=>{}}
-  //       aria-labelledby="parent-modal-title"
-  //       aria-describedby="parent-modal-description"
-  //       >
-  //       <Box sx={{ width: '70%', height: '90%', backgroundColor: 'white', overflowY: 'scroll', borderRadius: '1rem', padding: '1rem' }}>
-  //         <div style={{ display: 'flex'}}>
-  //           <h2 id="parent-modal-title">Resultados da equipe por campeonato</h2>
-  //           <Button onClick={()=>setIsResultModalOpen(false)}>
-  //             <GridCloseIcon />
-  //         </Button>
-  //         </div>
-  //         {renderRows(mock)}
-  //       </Box>
-  //     </Modal>
-  //   </div>
+    //   <Modal
+    //     open={isResultModalOpen}
+    //     sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+    //     onClose={()=>{}}
+    //     aria-labelledby="parent-modal-title"
+    //     aria-describedby="parent-modal-description"
+    //     >
+    //     <Box sx={{ width: '70%', height: '90%', backgroundColor: 'white', overflowY: 'scroll', borderRadius: '1rem', padding: '1rem' }}>
+    //       <div style={{ display: 'flex'}}>
+    //         <h2 id="parent-modal-title">Resultados da equipe por campeonato</h2>
+    //         <Button onClick={()=>setIsResultModalOpen(false)}>
+    //           <GridCloseIcon />
+    //       </Button>
+    //       </div>
+    //       {renderRows(mock)}
+    //     </Box>
+    //   </Modal>
+    // </div>
   // )
 
   // if(!rankingQueryResults || !rankingQueryResults.length) {
@@ -175,45 +175,29 @@ function RankingsTable({ rankingQueryResults }) {
   // }
 
   const handleOnCellClick = (params) => {
-    alert(params.row.team);
-
-    // Campeonato ${ChampionshipName} em ${ChampionshipDate}: ${ClassificationPosition}° lugar - ${ScorePoints} pontos
-    return (
-      <div>
-        <TrophyIcon onClick={() => handleTrophyClick(1,2)} />
-
-        <Modal
-          open={isResultModalOpen}
-          sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
-          onClose={()=>{}}
-          aria-labelledby="parent-modal-title"
-          aria-describedby="parent-modal-description"
-          >
-          <Box
-            sx={{ width: '70%', height: '90%', backgroundColor: 'white', overflowY: 'scroll', borderRadius: '1rem', padding: '1rem' }}
-          >
-            <div
-              style={{ display: 'flex'}}
-            >
-              <h2
-                id="parent-modal-title"
-              >Resultados da equipe por campeonato</h2>
-              <Button
-                onClick={()=>setIsResultModalOpen(false)}
-              >
-                <GridCloseIcon />
-              </Button>
-            </div>
-            aaaaaa
-            {renderRows(mock)}
-          </Box>
-        </Modal>
-      </div>
-    );
-
+    setIsResultModalOpen(true);
   };
 
   return (
+    <div>
+    {/* <TrophyIcon onClick={() => handleTrophyClick(1,2)} /> */}
+    <Modal
+      open={isResultModalOpen}
+      sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+      onClose={()=>{}}
+      aria-labelledby="parent-modal-title"
+      aria-describedby="parent-modal-description"
+      >
+      <Box sx={{ width: '70%', height: '90%', backgroundColor: 'white', overflowY: 'scroll', borderRadius: '1rem', padding: '1rem' }}>
+        <div style={{ display: 'flex'}}>
+          <h2 id="parent-modal-title">Resultados da equipe por campeonato</h2>
+          <Button onClick={()=>setIsResultModalOpen(false)}>
+            <GridCloseIcon />
+        </Button>
+        </div>
+        {renderRows(mock)}
+      </Box>
+    </Modal>
     <Box
     sx={{
       height: "100vh",
@@ -233,6 +217,7 @@ function RankingsTable({ rankingQueryResults }) {
       onCellClick={handleOnCellClick}
     />
     </Box>
+  </div>
   );
 }
 
