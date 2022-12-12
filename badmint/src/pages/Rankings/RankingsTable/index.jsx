@@ -69,13 +69,15 @@ const columns = [
     description: "Pontos válidos do atleta no período em questão",
   },
   {
+    field: "team",
     headerName: "Resultados",
     description: "Resultados da equipe por campeonato",
-    width: 15,
+    width: 100,
     sortable: false,
     hideable: false,
     headerAlign: "center",
-    // renderCell: (cellValues) => {return <TrophyIcon onClick={handleTrophyClick(cellValues.row.athlete1MemberID, cellValues.row.athlete2MemberID)} />},
+    align: "center",
+    renderCell: (cellValues) => {return <TrophyIcon value="${cellValues.row.athlete1MemberID}" /*onClick={handleTrophyClick(cellValues.row.athlete1MemberID, cellValues.row.athlete2MemberID)alert('oi')}*/ />},
   },
 ];
 
@@ -92,14 +94,12 @@ function RankingsTable({ rankingQueryResults }) {
   
   const [isResultModalOpen, setIsResultModalOpen] = React.useState(false);
   
-  
   function handleTrophyClick(athlete1MemberId, Athlete2MemberId) {
     setIsResultModalOpen(true)
 
     alert(JSON.stringify({ athlete1MemberId, Athlete2MemberId }))
   }
-  
-  
+ 
   const mock = [
     {ChampionshipName: '2022 Etapa 1 Presidente Getúlio', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
     {ChampionshipName: '2022 Etapa 2 Ibirama', ChampionshipDate: '01/01/2022', ClassificationPosition: '4', ScorePoints: '800'},
@@ -146,35 +146,72 @@ function RankingsTable({ rankingQueryResults }) {
   }
 
   // Campeonato ${ChampionshipName} em ${ChampionshipDate}: ${ClassificationPosition}° lugar - ${ScorePoints} pontos
-  return (
-    <div>
-    <TrophyIcon onClick={() => handleTrophyClick(1,2)} />
+  // return (
+  //   <div>
+  //     <TrophyIcon onClick={() => handleTrophyClick(1,2)} />
 
-    <Modal
-      open={isResultModalOpen}
-      sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
-      onClose={()=>{}}
-      aria-labelledby="parent-modal-title"
-      aria-describedby="parent-modal-description"
-      >
-      <Box sx={{ width: '70%', height: '90%', backgroundColor: 'white', overflowY: 'scroll', borderRadius: '1rem', padding: '1rem' }}>
-        <div style={{ display: 'flex'}}>
-          <h2 id="parent-modal-title">Resultados da equipe por campeonato</h2>
-          <Button onClick={()=>setIsResultModalOpen(false)}>
-            <GridCloseIcon />
-        </Button>
-        </div>
-        {renderRows(mock)}
-      </Box>
-    </Modal>
-  </div>
-  )
+  //     <Modal
+  //       open={isResultModalOpen}
+  //       sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+  //       onClose={()=>{}}
+  //       aria-labelledby="parent-modal-title"
+  //       aria-describedby="parent-modal-description"
+  //       >
+  //       <Box sx={{ width: '70%', height: '90%', backgroundColor: 'white', overflowY: 'scroll', borderRadius: '1rem', padding: '1rem' }}>
+  //         <div style={{ display: 'flex'}}>
+  //           <h2 id="parent-modal-title">Resultados da equipe por campeonato</h2>
+  //           <Button onClick={()=>setIsResultModalOpen(false)}>
+  //             <GridCloseIcon />
+  //         </Button>
+  //         </div>
+  //         {renderRows(mock)}
+  //       </Box>
+  //     </Modal>
+  //   </div>
+  // )
 
-
-  
   // if(!rankingQueryResults || !rankingQueryResults.length) {
   //   return <></>
   // }
+
+  const handleOnCellClick = (params) => {
+    alert(params.row.team);
+
+    // Campeonato ${ChampionshipName} em ${ChampionshipDate}: ${ClassificationPosition}° lugar - ${ScorePoints} pontos
+    return (
+      <div>
+        <TrophyIcon onClick={() => handleTrophyClick(1,2)} />
+
+        <Modal
+          open={isResultModalOpen}
+          sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+          onClose={()=>{}}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+          >
+          <Box
+            sx={{ width: '70%', height: '90%', backgroundColor: 'white', overflowY: 'scroll', borderRadius: '1rem', padding: '1rem' }}
+          >
+            <div
+              style={{ display: 'flex'}}
+            >
+              <h2
+                id="parent-modal-title"
+              >Resultados da equipe por campeonato</h2>
+              <Button
+                onClick={()=>setIsResultModalOpen(false)}
+              >
+                <GridCloseIcon />
+              </Button>
+            </div>
+            aaaaaa
+            {renderRows(mock)}
+          </Box>
+        </Modal>
+      </div>
+    );
+
+  };
 
   return (
     <Box
@@ -193,8 +230,8 @@ function RankingsTable({ rankingQueryResults }) {
       disableColumnMenu
       disableSelectionOnClick
       experimentalFeatures={{ newEditingApi: true }}
+      onCellClick={handleOnCellClick}
     />
-
     </Box>
   );
 }
